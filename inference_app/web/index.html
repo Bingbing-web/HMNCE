@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HMNCE 湖北城市数值推理地图</title>
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">HMNCE · Geographic Numerical Reasoning</p>
+        <h1>湖北城市年度推理图谱</h1>
+        <p class="subtitle">以关系感知的数值属性表示，呈现城市类型预测、模型一致性与经济指标画像。</p>
+      </div>
+      <div class="model-badge"><span class="pulse"></span><div><strong>Model status</strong><small id="modelStatus">等待数据</small></div></div>
+    </header>
+
+    <section class="toolbar panel">
+      <label>模式<select id="modeSelect"><option value="type">城市类型重构</option><option value="comparison">13 指标比较</option><option value="ranking">城市指标排名</option></select></label>
+      <label>年份<select id="yearSelect"></select></label>
+      <label>关系<select id="relationSelect"></select></label>
+      <label id="anchorLabel">基准城市<select id="anchorSelect"></select></label>
+      <label>最低置信度<div class="range-line"><input id="confidenceRange" type="range" min="0" max="1" step="0.01" value="0"><output id="confidenceValue">0.00</output></div></label>
+      <label class="check"><input id="agreementOnly" type="checkbox"><span>仅显示双模型一致</span></label>
+      <button id="reloadButton">重新加载</button>
+    </section>
+
+    <section class="workspace">
+      <div class="map-card panel">
+        <div id="map"></div>
+        <div id="legend" class="legend"></div>
+      </div>
+      <aside class="details panel">
+        <div id="emptyState" class="empty-state"><div id="mapOverview"></div></div>
+        <div id="cityDetails" hidden>
+          <div class="details-head"><div><p id="detailYear" class="eyebrow"></p><h2 id="detailCity"></h2></div><div class="details-actions"><span id="confidenceBadge" class="confidence-badge"></span><button id="backOverview" type="button">返回概览</button></div></div>
+          <div class="prediction-card"><small>模型预测</small><strong id="prediction"></strong><div class="score-row"><span id="confidenceLabel">模型分数</span><b id="confidence"></b></div><div class="meter"><i id="confidenceMeter"></i></div></div>
+          <div class="meta-grid"><div><small>已知来源</small><strong id="knownSplit"></strong></div><div><small>双模型一致</small><strong id="agreement"></strong></div></div>
+          <div id="comparisonFacts" class="meta-grid"></div>
+          <h3>候选明细</h3><ol id="topK" class="ranking"></ol>
+          <h3>数值属性画像</h3><canvas id="radar" width="380" height="300"></canvas>
+        </div>
+      </aside>
+    </section>
+    <footer>预测结果为候选知识；校准置信度不代表因果概率。正式论文报告需同时给出按关系指标与人工核验。</footer>
+  </main>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
